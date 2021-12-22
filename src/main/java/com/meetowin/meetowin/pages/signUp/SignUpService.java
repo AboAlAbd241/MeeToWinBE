@@ -1,12 +1,10 @@
-package com.meetowin.meetowin.pages.signup;
+package com.meetowin.meetowin.pages.signUp;
 
-import com.meetowin.meetowin.Dto.Response;
 import com.meetowin.meetowin.model.AuthProvider;
 import com.meetowin.meetowin.model.Users;
 import com.meetowin.meetowin.pages.login.LoginService;
 import com.meetowin.meetowin.repository.UserRepository;
 import com.meetowin.meetowin.security.exception.BadRequestException;
-import com.meetowin.meetowin.security.payload.LoginRequest;
 import com.meetowin.meetowin.security.payload.SignUpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

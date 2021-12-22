@@ -24,26 +24,6 @@ public class LoginService {
     @Autowired
     private TokenProvider tokenProvider;
 
-//    public LoginRes checkAccount(LoginReq loginReq){
-//        LoginRes loginRes=new LoginRes();
-//        if (!loginReq.getPassword().isEmpty()&&!loginReq.getUsername().isEmpty()){
-//            Optional<Users> user=userRepository.findByUsername(loginReq.getUsername());
-//            if (user.isPresent()&&user.get().getPassword().equals(loginReq.getPassword())){
-//                loginRes.setId(user.get().getId());
-//                loginRes.setStatus("Found");
-//                return loginRes;
-//            }else {
-//                loginRes.setStatus("Not Found");
-//                return loginRes;
-//            }
-//        }
-//        else{
-//            loginRes.setStatus("Not Found");
-//            return loginRes;
-//        }
-//
-//    }
-//
     public String getToken(LoginRequest loginRequest){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

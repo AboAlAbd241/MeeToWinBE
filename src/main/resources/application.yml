@@ -14,6 +14,35 @@ spring:
     url: jdbc:mysql://157.175.193.147:3306/test
     username: meet
     password: Outlook@800meettowin
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: meettowin@gmail.com
+    password: dqbfojicaszgfzfs
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
+#  mail:
+#    properities:
+#      mail:
+#        smtp:
+#          ssl.trust: smtp.gmail.com
+#          auth: true
+#          starttls:
+#            enable: true
+#    host: smtp.gmail.com
+#    port: 587
+#    username: meettowin@gmail.com
+#    password: dqbfojicaszgfzfs
+#    protocol: smtp
+#    tls: true
+
 
   jpa:
     show-sql: true

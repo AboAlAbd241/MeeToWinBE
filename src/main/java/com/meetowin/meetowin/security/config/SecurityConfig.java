@@ -109,16 +109,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js",
                             "/login",
-                            "/signup")
+                            "/signup",
+                            "/forget-password")
                         .permitAll()
-                    .antMatchers("/auth/**", "/oauth2/**")
+                    .antMatchers( "/oauth2/**")
                         .permitAll()
                     .anyRequest()
                         .authenticated()
                     .and()
                 .oauth2Login()
                     .authorizationEndpoint()
-                        .baseUri("/oauth2/authorize")
+                        .baseUri("/oauth2")
                         .authorizationRequestRepository(cookieAuthorizationRequestRepository())
                         .and()
                     .redirectionEndpoint()
