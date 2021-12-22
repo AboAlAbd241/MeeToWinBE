@@ -110,7 +110,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js",
                             "/login",
                             "/signup",
-                            "/forget-password")
+                            "/forget-password/**")
                         .permitAll()
                     .antMatchers( "/oauth2/**")
                         .permitAll()

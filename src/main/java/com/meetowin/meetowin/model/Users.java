@@ -1,11 +1,13 @@
 package com.meetowin.meetowin.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -40,31 +42,15 @@ public class Users {
     @Column(name = "provider_id")
     private String providerId;
 
-
     private Date date;
     @Column(name = "reported_number",nullable = false)
     private Long reportedNumber=0L;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy="users")
+    private List<ForgetPassword> forgetPassword;
+
     public Users() {
-
-    }
-
-    public Users(Long id, String name, String username, String email, String imageUrl,
-                 Boolean emailVerified, String password, String phoneNumber,
-                 AuthProvider provider, String providerId, Date date,
-                 Long reportedNumber) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.imageUrl = imageUrl;
-        this.emailVerified = emailVerified;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.provider = provider;
-        this.providerId = providerId;
-        this.date = date;
-        this.reportedNumber = reportedNumber;
     }
 
     public Long getId() {
@@ -161,5 +147,13 @@ public class Users {
 
     public void setReportedNumber(Long reportedNumber) {
         this.reportedNumber = reportedNumber;
+    }
+
+    public List<ForgetPassword> getForgetPassword() {
+        return forgetPassword;
+    }
+
+    public void setForgetPassword(List<ForgetPassword> forgetPassword) {
+        this.forgetPassword = forgetPassword;
     }
 }
