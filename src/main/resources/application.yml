@@ -49,8 +49,8 @@ spring:
               - email
               - profile
           facebook:
-            clientId: 935345167119361
-            clientSecret: f80fa4d12ad0cb98402cad1af84ebf2b
+            clientId: 265069552281922
+            clientSecret: 779dc56fae00d3a96759689e95f39250
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             accessTokenUri: https://www.facebook.com/dialog/oauth
             tokenName: oauth_token

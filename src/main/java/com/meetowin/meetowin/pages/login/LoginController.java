@@ -21,19 +21,14 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("login")
 public class LoginController {
-
     @Autowired
     private LoginService loginService;
-
     @Autowired
     private AppProperties appProperties;
-
     @Autowired
     private ForgetPasswordService emailSenderService;
-
     @Autowired
     private UserRepository userRepository;
-
 
     @PostMapping
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
