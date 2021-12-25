@@ -1,16 +1,14 @@
 package com.meetowin.meetowin.pages.signUp;
 
+import com.meetowin.meetowin.Dto.Response;
+import com.meetowin.meetowin.repository.UserRepository;
 import com.meetowin.meetowin.security.payload.ApiResponse;
 import com.meetowin.meetowin.security.payload.SignUpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.validation.Errors;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -20,22 +18,35 @@ public class SignUpController {
     @Autowired
     private SignUpService service;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private JavaMailSender mailSender;
 
 
-//    @PostMapping
-//    public Response addUser(@RequestBody Users users){
-//            return service.addUser(users);
-//        }
 
-
-@PostMapping
-public  ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-    return ResponseEntity.created(service.addUser(signUpRequest))
+/*@PostMapping()
+public  ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest ) {
+    return ResponseEntity.created(service.testUser(signUpRequest))
             .body(new ApiResponse(true, "User registered successfully@"));
+}*/
+
+@PostMapping()
+    public Response registerUser(@RequestBody SignUpRequest signUpRequest){
+    return service.addUser(signUpRequest);
+}
+
+@GetMapping("/confirm-account")
+    public Response ConfirmAccount( @RequestParam("token")String confirmationToken){
+    return service.ConfirmAccount(confirmationToken);
 }
 
 
-    }
+
+}
 
 
 

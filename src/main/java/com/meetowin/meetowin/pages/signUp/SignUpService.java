@@ -1,17 +1,20 @@
 package com.meetowin.meetowin.pages.signUp;
 
+import com.meetowin.meetowin.Dto.Response;
 import com.meetowin.meetowin.model.AuthProvider;
+import com.meetowin.meetowin.model.VerifiedEmail;
 import com.meetowin.meetowin.model.Users;
-import com.meetowin.meetowin.pages.login.LoginService;
+import com.meetowin.meetowin.repository.ConfirmationTokenRepository;
 import com.meetowin.meetowin.repository.UserRepository;
 import com.meetowin.meetowin.security.exception.BadRequestException;
 import com.meetowin.meetowin.security.payload.SignUpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
+import java.util.Optional;
 
 @Service
 public class SignUpService {
@@ -20,30 +23,33 @@ public class SignUpService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private LoginService loginService;
 
-//    public Response addUser(Users users) {
-//        Response res = new Response();
-//        if (users.getUsername()==null||users.getPassword()==null||users.getEmail()==null||users.getPhoneNumber()==null||users.getName()==null||users.getUsername().isEmpty()||users.getPassword().isEmpty()||users.getEmail().isEmpty()||users.getPhoneNumber().isEmpty()||users.getName().isEmpty()){
-//            res.setStatus("Missing Some Information");
-//            return res;
-//        }else
-//        if (userRepository.findByUsername(users.getUsername()).isPresent()) {
-//            res.setStatus("Username Taken");
-//            return res;
-//        }else if (userRepository.findByEmail(users.getEmail()).isPresent()){
-//            res.setStatus("Email Taken");
-//            return res;
-//        }else {
-//            userRepository.save(users);
-//            res.setStatus("Done");
-//            return res;
-//        }
-//    }
-//
-    public URI addUser(SignUpRequest signUpRequest){
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+
+    @Autowired
+    private ConfirmationTokenRepository confirmationTokenRepository;
+
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+
+
+    public void sendMail(String email, String Subject, String Text) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("meettowin@gmail.com");
+        simpleMailMessage.setTo(email);
+        simpleMailMessage.setText(Text);
+        simpleMailMessage.setSubject(Subject);
+
+        try {
+            javaMailSender.send(simpleMailMessage);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    /*public URI addUser(SignUpRequest signUpRequest) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new BadRequestException("Email address already in use.");
         }
 
@@ -65,5 +71,53 @@ public class SignUpService {
                 .fromCurrentContextPath().path("/user/me")
                 .buildAndExpand(result.getId()).toUri();
 
+    }*/
+
+
+    public Response addUser(SignUpRequest signUpRequest) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            throw new BadRequestException("Email address already in use.");
+        }
+
+
+        // Creating user's account
+        Users user = new Users();
+        user.setName(signUpRequest.getName());
+        user.setEmail(signUpRequest.getEmail());
+        user.setPassword(signUpRequest.getPassword());
+        user.setProvider(AuthProvider.local);
+
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        userRepository.save(user);
+
+        VerifiedEmail confirmationToken = new VerifiedEmail(user);
+
+        confirmationTokenRepository.save(confirmationToken);
+
+        sendMail(user.getEmail(), "Complete Registration!", "To confirm your account, please click here : "
+                + "http://localhost:8080/signup/confirm-account?token=" + confirmationToken.getConfirmationToken());
+        Response response = new Response();
+        response.setStatus("done");
+        return response;
+    }
+
+    public Response ConfirmAccount(String confirmationToken){
+        VerifiedEmail token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+        Response response = new Response();
+
+        if(token != null)
+        {
+            Optional<Users> user = userRepository.findById(token.getUserEntity().getId());
+            user.get().setEmailVerified(true);
+            userRepository.save(user.get());
+            response.setStatus("accountVerified");
+        }
+        else
+        {
+            response.setStatus("The link is invalid or broken!");
+        }
+        return response;
     }
 }

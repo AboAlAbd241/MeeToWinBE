@@ -76,8 +76,6 @@ public class ForgetPasswordService {
         for (ForgetPassword forgetPassword:forgetPasswordList){
             if (forgetPassword.getCode().equals(forgetReq.getCode())){
                 if (forgetPassword.isValid()&&forgetPassword.getExpiration().after(new Date())){
-//                    forgetPassword.setCode("null");
-//                    forgetPassword.setValid(false);
                     forgetPassword.setToken(String.valueOf(getCode().hashCode()*114));
                     forgetPasswordRepository.save(forgetPassword);
                     response.setStatus("Valid code");
