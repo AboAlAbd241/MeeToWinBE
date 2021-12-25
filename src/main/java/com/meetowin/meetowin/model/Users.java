@@ -2,7 +2,8 @@ package com.meetowin.meetowin.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -42,7 +43,10 @@ public class Users {
     @Column(name = "provider_id")
     private String providerId;
 
-    private Date date;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_date")
+    private Date createdDate;
+
     @Column(name = "reported_number",nullable = false)
     private Long reportedNumber=0L;
 
@@ -50,8 +54,10 @@ public class Users {
     @OneToMany(mappedBy="users")
     private List<ForgetPassword> forgetPassword;
 
+
     public Users() {
     }
+
 
     public Long getId() {
         return id;
@@ -134,11 +140,11 @@ public class Users {
     }
 
     public Date getDate() {
-        return date;
+        return createdDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Long getReportedNumber() {
@@ -156,4 +162,6 @@ public class Users {
     public void setForgetPassword(List<ForgetPassword> forgetPassword) {
         this.forgetPassword = forgetPassword;
     }
+
+
 }
