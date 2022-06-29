@@ -1,9 +1,8 @@
 package com.meetowin.meetowin.pages.forgetPassword;
 
 import com.meetowin.meetowin.Dto.Response;
-import com.meetowin.meetowin.model.ForgetPassword;
-import com.meetowin.meetowin.pages.forgetPassword.Dto.ForgetReq;
-import com.meetowin.meetowin.pages.forgetPassword.Dto.ForgetRes;
+import com.meetowin.meetowin.pages.forgetPassword.DTO.ForgetReq;
+import com.meetowin.meetowin.pages.forgetPassword.DTO.ForgetRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

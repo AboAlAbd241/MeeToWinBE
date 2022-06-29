@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("signup")
+@RequestMapping("sign-up")
 public class SignUpController {
 
     @Autowired

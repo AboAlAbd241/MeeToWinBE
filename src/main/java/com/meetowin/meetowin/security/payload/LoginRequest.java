@@ -3,9 +3,6 @@ package com.meetowin.meetowin.security.payload;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-/**
- * Created by rajeevkumarsingh on 02/08/17.
- */
 public class LoginRequest {
     @NotBlank
     @Email
@@ -28,5 +25,13 @@ public class LoginRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginRequest{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

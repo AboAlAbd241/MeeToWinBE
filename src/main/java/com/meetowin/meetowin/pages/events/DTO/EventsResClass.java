@@ -6,8 +6,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class EventsResReq {
-    private Long id;
+public class EventsResClass {
+    private String id;
 
     private String title;
 
@@ -27,11 +27,10 @@ public class EventsResReq {
 
     private String duration;
 
-    private Long userID;
 
 
 
-    public EventsResReq() {
+    public EventsResClass() {
     }
 
     public String getTitle() {
@@ -106,11 +105,11 @@ public class EventsResReq {
         this.duration = duration;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String  id) {
         this.id = id;
     }
 

@@ -86,6 +86,7 @@ public class SignUpService {
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(signUpRequest.getPassword());
         user.setProvider(AuthProvider.local);
+        user.setUsername(signUpRequest.getUsername());
 
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));

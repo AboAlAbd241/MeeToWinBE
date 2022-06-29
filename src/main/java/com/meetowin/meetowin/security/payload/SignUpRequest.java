@@ -3,9 +3,6 @@ package com.meetowin.meetowin.security.payload;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-/**
- * Created by rajeevkumarsingh on 02/08/17.
- */
 
 public class SignUpRequest {
     @NotBlank
@@ -17,6 +14,9 @@ public class SignUpRequest {
 
     @NotBlank
     private String password;
+
+    @NotBlank
+    private String username;
 
     public String getName() {
         return name;
@@ -40,5 +40,13 @@ public class SignUpRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -1,6 +1,7 @@
-package com.example.websocketdemo.controller;
+package com.meetowin.meetowin.pages.chat;
 
-import com.example.websocketdemo.model.ChatMessage;
+import com.meetowin.meetowin.common.EncryptIds;
+import com.meetowin.meetowin.pages.chat.DTO.ChatRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +29,16 @@ public class WebSocketEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
-        String username = (String) headerAccessor.getSessionAttributes().get("username");
-        if(username != null) {
-            logger.info("User Disconnected : " + username);
+        String sender = (String) headerAccessor.getSessionAttributes().get("currentUser");
 
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setType(ChatMessage.MessageType.LEAVE);
-            chatMessage.setSender(username);
+        if(sender != null) {
+            logger.info("User Disconnected : " + sender);
+
+            ChatRequest chatMessage = new ChatRequest();
+            chatMessage.setSender(sender);
 
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }
+
     }
 }

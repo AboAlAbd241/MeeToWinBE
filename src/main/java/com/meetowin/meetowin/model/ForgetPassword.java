@@ -2,6 +2,7 @@ package com.meetowin.meetowin.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "forget_password")
@@ -9,10 +10,15 @@ public class ForgetPassword {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String code;
+
     private Date expiration ;
+
     private boolean valid =true;
+
     private String email;
+
     private String token;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -23,6 +29,8 @@ public class ForgetPassword {
     @JsonBackReference
     @JoinColumn(name="user_id", nullable=false)
     private Users users;
+
+
 
     public ForgetPassword(){
     }

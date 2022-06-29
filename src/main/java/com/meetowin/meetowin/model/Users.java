@@ -2,6 +2,8 @@ package com.meetowin.meetowin.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.apache.catalina.User;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,10 +20,13 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Column(unique=true)
     private String username;
+
     @Email
     @Column(unique=true,nullable = false)
     private String email;
@@ -33,6 +39,7 @@ public class Users {
 
     @JsonIgnore
     private String password;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -43,8 +50,8 @@ public class Users {
     @Column(name = "provider_id")
     private String providerId;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
     @Column(name = "reported_number",nullable = false)
@@ -52,12 +59,39 @@ public class Users {
 
     @JsonManagedReference
     @OneToMany(mappedBy="users")
+    @JsonIgnore
     private List<ForgetPassword> forgetPassword;
+
+//    @ManyToMany(mappedBy = "subscribedUsers")
+//    private List<Events> subscribedEvents;
+
+    private String about;
+
+    private Long rating;
+
+    @Column(name = "event_created")
+    private Long eventCreated;
+
+//    @JsonManagedReference
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<SubscribedUsers> subscribedUsers;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "sender")
+    private List<Chat> sender;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "receiver")
+    private List<Chat> receiver;
 
 
     public Users() {
     }
 
+    public Users(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
@@ -163,5 +197,51 @@ public class Users {
         this.forgetPassword = forgetPassword;
     }
 
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+//    public List<Events> getSubscribedEvents() {
+//        return subscribedEvents;
+//    }
+//
+//    public void setSubscribedEvents(List<Events> rolledEvents) {
+//        this.subscribedEvents = rolledEvents;
+//    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public Long getRating() {
+        return rating;
+    }
+
+    public void setRating(Long rating) {
+        this.rating = rating;
+    }
+
+    public Long getEventCreated() {
+        return eventCreated;
+    }
+
+    public void setEventCreated(Long eventCreated) {
+        this.eventCreated = eventCreated;
+    }
+
+    public List<SubscribedUsers> getSubscribedUsers() {
+        return subscribedUsers;
+    }
+
+    public void setSubscribedUsers(List<SubscribedUsers> subscribedUsers) {
+        this.subscribedUsers = subscribedUsers;
+    }
 }

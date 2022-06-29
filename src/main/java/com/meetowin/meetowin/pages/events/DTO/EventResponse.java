@@ -1,10 +1,8 @@
 package com.meetowin.meetowin.pages.events.DTO;
 
-import com.meetowin.meetowin.model.Users;
-
 import java.util.Date;
 
-public interface EventRes {
+public interface EventResponse {
      Long getId();
      String getTitle();
      String getDescription();

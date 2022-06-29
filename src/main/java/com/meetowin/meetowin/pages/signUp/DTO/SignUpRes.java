@@ -1,4 +1,4 @@
-package com.meetowin.meetowin.pages.signUp.dto;
+package com.meetowin.meetowin.pages.signUp.DTO;
 
 import lombok.Data;
 

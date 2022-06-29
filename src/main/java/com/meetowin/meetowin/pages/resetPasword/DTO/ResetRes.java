@@ -1,4 +1,4 @@
-package com.meetowin.meetowin.pages.resetPasword.Dto;
+package com.meetowin.meetowin.pages.resetPasword.DTO;
 
 import lombok.Data;
 

@@ -3,8 +3,8 @@ package com.meetowin.meetowin.pages.forgetPassword;
 import com.meetowin.meetowin.Dto.Response;
 import com.meetowin.meetowin.model.ForgetPassword;
 import com.meetowin.meetowin.model.Users;
-import com.meetowin.meetowin.pages.forgetPassword.Dto.ForgetReq;
-import com.meetowin.meetowin.pages.forgetPassword.Dto.ForgetRes;
+import com.meetowin.meetowin.pages.forgetPassword.DTO.ForgetReq;
+import com.meetowin.meetowin.pages.forgetPassword.DTO.ForgetRes;
 import com.meetowin.meetowin.repository.ForgetPasswordRepository;
 import com.meetowin.meetowin.repository.UserRepository;
 import com.meetowin.meetowin.security.exception.BadRequestException;
@@ -89,13 +89,13 @@ public class ForgetPasswordService {
 
     public  String getCode(){
         Random random = new Random();
-        Integer num =  random.ints(10000, 99999).findFirst().getAsInt();
+        Integer num = random.ints(10000, 99999).findFirst().getAsInt();
         return num.toString();
     }
 
     public ForgetRes checkCode(ForgetReq forgetReq){
-        ForgetRes response=new ForgetRes();
-        List<ForgetPassword> forgetPasswordList=forgetPasswordRepository.findByEmail(forgetReq.getEmail());
+        ForgetRes response = new ForgetRes();
+        List<ForgetPassword> forgetPasswordList = forgetPasswordRepository.findByEmail(forgetReq.getEmail());
         for (ForgetPassword forgetPassword:forgetPasswordList){
             if (forgetPassword.getCode().equals(forgetReq.getCode())){
                 if (forgetPassword.isValid()&&forgetPassword.getExpiration().after(new Date())){

@@ -109,13 +109,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js",
                             "/login",
-                            "/signup/**",
-                            "/forget-password/**")
+                            "/sign-up/**",
+                            "/forget-password/**",
+                            "/EventInfoController/not-auth-subscribed-users",
+                            "/EventInfoController/available-users",
+                            "/EventsController/events-details",
+                            "/EventsController/events",
+                            "/ProfileController/profile",
+                            "/ProfileController/event-created"
+                            )
                         .permitAll()
                     .antMatchers( "/oauth2/**")
                         .permitAll()
-                    .anyRequest()
-                        .authenticated()
+//                    .anyRequest()
+//                        .authenticated();
                     .and()
                 .oauth2Login()
                     .authorizationEndpoint()
@@ -133,5 +140,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Add our custom Token based authentication filter
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+//        http.csrf().disable()
+//                .authorizeRequests()
+////                .antMatchers("/user/login", "/user/register").permitAll()
+////                .antMatchers("/consumer/payment/**").hasRole("ADMIN")
+////                .antMatchers("/consumer/test/**").hasAuthority("PRO")
+//                .antMatchers("/**").permitAll();
+//
+////         Add our custom Token based authentication filter
+//        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

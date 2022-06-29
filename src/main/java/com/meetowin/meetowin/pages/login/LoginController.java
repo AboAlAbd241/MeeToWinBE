@@ -10,6 +10,8 @@ import com.meetowin.meetowin.security.payload.AuthResponse;
 import com.meetowin.meetowin.security.payload.LoginRequest;
 import com.meetowin.meetowin.security.security.CurrentUser;
 import com.meetowin.meetowin.security.security.UserPrincipal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +32,12 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     @PostMapping
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        logger.trace("Login Controller");
+        logger.trace(loginRequest.toString());
         return ResponseEntity.ok(new AuthResponse(loginService.getToken(loginRequest)));
     }
 

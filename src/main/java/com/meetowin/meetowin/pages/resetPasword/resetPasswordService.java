@@ -3,7 +3,7 @@ package com.meetowin.meetowin.pages.resetPasword;
 
 import com.meetowin.meetowin.Dto.Response;
 import com.meetowin.meetowin.model.Users;
-import com.meetowin.meetowin.pages.resetPasword.Dto.ResetReq;
+import com.meetowin.meetowin.pages.resetPasword.DTO.ResetReq;
 import com.meetowin.meetowin.repository.UserRepository;
 import com.meetowin.meetowin.security.exception.ResourceNotFoundException;
 import com.meetowin.meetowin.security.security.UserPrincipal;
@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 import static java.lang.String.valueOf;
 
